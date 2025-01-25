@@ -14,7 +14,7 @@ button.addEventListener("click", function () {
 function incrementAndUpdate() {
     console.log("This runs every second");
     x += 1;
-    output.textContent = "Current value of x: " + x;
+    output.textContent = x;
 }
 
 setInterval(incrementAndUpdate, 1000);
