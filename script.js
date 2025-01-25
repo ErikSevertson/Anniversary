@@ -11,3 +11,10 @@ button.addEventListener("click", function () {
     output.textContent = x;
 });
 
+setInterval(oneSecondFunction, 1000);
+
+runFunction() {
+    x = x + 10;
+}
+
+
