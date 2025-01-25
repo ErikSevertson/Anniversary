@@ -1,7 +1,7 @@
 
 let x = 0;
 
-const button = document.getElementById("myButton");
+const button = document.getElementById("mybutton");
 const output = document.getElementById("output");
 
 button.addEventListener("click", function () {
