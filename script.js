@@ -1,4 +1,6 @@
 
+console.log("Script loaded!");
+
 let x = 0;
 
 const button = document.getElementById("mybutton");
