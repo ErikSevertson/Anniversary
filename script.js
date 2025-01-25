@@ -11,8 +11,11 @@ button.addEventListener("click", function () {
     output.textContent = x;
 });
 
-setInterval(function () {
-    // Update some content every second (for example, increment x)
-    x += 10;
-}, 1000); // 1000 milliseconds = 1 second
+function incrementAndUpdate() {
+    console.log("This runs every second");
+    x += 1;
+    output.textContent = "Current value of x: " + x;
+}
+
+setInterval(incrementAndUpdate, 1000);
 
