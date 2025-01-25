@@ -11,10 +11,8 @@ button.addEventListener("click", function () {
     output.textContent = x;
 });
 
-setInterval(oneSecondFunction, 1000);
-
-runFunction() {
-    x = x + 10;
-}
-
+setInterval(function () {
+    // Update some content every second (for example, increment x)
+    x += 10;
+}, 1000); // 1000 milliseconds = 1 second
 
