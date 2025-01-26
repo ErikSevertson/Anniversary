@@ -1,6 +1,7 @@
 
 console.log("Script loaded!");
 
+let x;
 
 if (localStorage.getItem('amount') === null) {
     let x = 0;
