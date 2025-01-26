@@ -2,7 +2,7 @@
 console.log("Script loaded!");
 
 
-if (localStorage.getItem('amount') === null {
+if (localStorage.getItem('amount') === null) {
     let x = 0;
 }
 else {
