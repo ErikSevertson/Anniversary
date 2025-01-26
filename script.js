@@ -6,7 +6,7 @@ if (localStorage.getItem('amount') === null) {
     let x = 0;
 }
 else {
-    x = localStorage.setItem('amount', x);
+    x = localStorage.getItem('amount', x);
 }
 
 const button = document.getElementById("mybutton");
