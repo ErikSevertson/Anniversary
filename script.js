@@ -64,8 +64,11 @@ valueButton.addEventListener("click", function() {
 
 resetButton.addEventListener("click", function() {
     localStorage.clear();
+    currency = 0;
     localStorage.setItem('amount', 0);
+    value = 0;
     localStorage.setItem('value', 1);
+    passive = 0;
     localStorage.setItem('passive', 0);
 })
 
