@@ -13,7 +13,6 @@ else {
         console.log("Supposedly loaded amount but then fell back on NaN catch.");
         currency = 0;
     }
-    
 }
 
 if (localStorage.getItem('passive') === null) {
@@ -25,7 +24,17 @@ else {
         console.log("Supposedly loaded passive but then fell back on NaN catch.");
         passive = 0;
     }
-    
+}
+
+if (localStorage.getItem('value') === null) {
+    value = 1;
+}
+else {
+    value = parseInt(localStorage.getItem('value'));
+    if (isNaN(value)) {
+        console.log("Supposedly loaded passive but then fell back on NaN catch.");
+        value = 1;
+    }
 }
 
 const button = document.getElementById("mainButton");
@@ -42,13 +51,20 @@ button.addEventListener("click", function () {
 
 passiveButton.addEventListener("click", function() {
     passive = passive + 1;
-    passiveLabel.textContent = passive;
+    passiveLabel.textContent = "Passive Income: " + passive;
+})
+
+valueButton.addEventListener("click", function() {
+    value = value + 1;
+    valueLabel.textContent = "Click value: " + value;
 })
 
 function incrementAndUpdate() {
     currency += passive;
     outputLabel.textContent = currency;
     localStorage.setItem('amount', currency);
+    localStorage.setItem('passive', passive);
+    
     
 }
 
