@@ -7,7 +7,7 @@ if (localStorage.getItem('amount') === null) {
     let x = 0;
 }
 else {
-    x = localStorage.getItem('amount', x);
+    x = parseInt(localStorage.getItem('amount', x));
 }
 
 const button = document.getElementById("mybutton");
