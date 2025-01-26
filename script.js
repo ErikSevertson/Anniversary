@@ -15,7 +15,9 @@ else {
     
 }
 
-const button = document.getElementById("mybutton");
+const button = document.getElementById("mainButton");
+const valueButton = document.getElementById("valueButton");
+const passiveButton = document.getElementById("passiveButton");
 const output = document.getElementById("output");
 
 button.addEventListener("click", function () {
