@@ -21,6 +21,7 @@ const output = document.getElementById("output");
 button.addEventListener("click", function () {
     x = x + 1;
     output.textContent = x;
+    button.style.display = "none"; 
 });
 
 function incrementAndUpdate() {
