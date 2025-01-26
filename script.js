@@ -37,7 +37,7 @@ const passiveLabel = document.getElementById("passiveLabel");
 
 button.addEventListener("click", function () {
     currency = currency + 1;
-    outputLabel.textContent = x;
+    outputLabel.textContent = currency;
 });
 
 passiveButton.addEventListener("click", function() {
