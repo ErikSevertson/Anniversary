@@ -68,8 +68,10 @@ resetButton.addEventListener("click", function() {
     localStorage.setItem('amount', 0);
     value = 0;
     localStorage.setItem('value', 1);
+    valueLabel.textContent = "Click value: " + value;
     passive = 0;
     localStorage.setItem('passive', 0);
+    passiveLabel.textContent = "Passive Income: " + passive;
 })
 
 function incrementAndUpdate() {
