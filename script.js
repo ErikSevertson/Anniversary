@@ -31,9 +31,9 @@ else {
 const button = document.getElementById("mainButton");
 const valueButton = document.getElementById("valueButton");
 const passiveButton = document.getElementById("passiveButton1");
-const output = document.getElementById("outputLabel");
-const value = document.getElementById("valueLabel");
-const passive = document.getElementById("passiveLabel");
+const outputLabel = document.getElementById("outputLabel");
+const valueLabel = document.getElementById("valueLabel");
+const passiveLabel; = document.getElementById("passiveLabel");
 
 button.addEventListener("click", function () {
     currency = currency + 1;
@@ -47,7 +47,7 @@ passiveButton.addEventListener("click", function() {
 
 function incrementAndUpdate() {
     currency += passive;
-    output.textContent = currency;
+    outputLabel.textContent = currency;
     localStorage.setItem('amount', currency);
     
 }
