@@ -64,6 +64,9 @@ valueButton.addEventListener("click", function() {
 
 resetButton.addEventListener("click", function() {
     localStorage.clear();
+    localStorage.setItem('amount', 0);
+    localStorage.setItem('value', 1);
+    localStorage.setItem('passive', 0);
 })
 
 function incrementAndUpdate() {
