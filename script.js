@@ -8,8 +8,8 @@ if (localStorage.getItem('amount') === null) {
     currency = 0;
 }
 else {
-    x = parseInt(localStorage.getItem('amount'));
-    if (isNaN(x)) {
+    currency = parseInt(localStorage.getItem('amount'));
+    if (isNaN(currency)) {
         console.log("Supposedly loaded amount but then fell back on NaN catch.");
         currency = 0;
     }
