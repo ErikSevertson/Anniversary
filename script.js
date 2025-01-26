@@ -33,7 +33,7 @@ const valueButton = document.getElementById("valueButton");
 const passiveButton = document.getElementById("passiveButton1");
 const outputLabel = document.getElementById("outputLabel");
 const valueLabel = document.getElementById("valueLabel");
-const passiveLabel; = document.getElementById("passiveLabel");
+const passiveLabel = document.getElementById("passiveLabel");
 
 button.addEventListener("click", function () {
     currency = currency + 1;
