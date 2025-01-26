@@ -31,17 +31,18 @@ else {
 const button = document.getElementById("mainButton");
 const valueButton = document.getElementById("valueButton");
 const passiveButton = document.getElementById("passiveButton1");
-const output = document.getElementById("output");
-const value = document.getElementById("value");
-const passive = document.getElementById("passive");
+const output = document.getElementById("outputLabel");
+const value = document.getElementById("valueLabel");
+const passive = document.getElementById("passiveLabel");
 
 button.addEventListener("click", function () {
     currency = currency + 1;
-    output.textContent = x;
+    outputLabel.textContent = x;
 });
 
 passiveButton.addEventListener("click", function() {
     passive = passive + 1;
+    passiveLabel.textContent = passive;
 })
 
 function incrementAndUpdate() {
