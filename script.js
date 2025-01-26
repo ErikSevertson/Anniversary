@@ -4,7 +4,7 @@ console.log("Script loaded!");
 let x;
 
 if (localStorage.getItem('amount') === null) {
-    let x = 0;
+    x = 0;
 }
 else {
     x = parseInt(localStorage.getItem('amount', x));
@@ -19,7 +19,6 @@ button.addEventListener("click", function () {
 });
 
 function incrementAndUpdate() {
-    console.log("This runs every second");
     x += 1;
     output.textContent = x;
     localStorage.setItem('amount', x);
