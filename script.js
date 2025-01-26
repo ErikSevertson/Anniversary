@@ -7,6 +7,7 @@ let passive;
 const button = document.getElementById("mainButton");
 const valueButton = document.getElementById("valueButton");
 const passiveButton = document.getElementById("passiveButton1");
+const resetButton = document.getElementById("resetButton");
 const outputLabel = document.getElementById("outputLabel");
 const valueLabel = document.getElementById("valueLabel");
 const passiveLabel = document.getElementById("passiveLabel");
@@ -59,6 +60,10 @@ passiveButton.addEventListener("click", function() {
 valueButton.addEventListener("click", function() {
     value = value + 1;
     valueLabel.textContent = "Click value: " + value;
+})
+
+resetButton.addEventListener("click", function() {
+    localStorage.clear();
 })
 
 function incrementAndUpdate() {
