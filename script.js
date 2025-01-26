@@ -64,7 +64,7 @@ function incrementAndUpdate() {
     outputLabel.textContent = currency;
     localStorage.setItem('amount', currency);
     localStorage.setItem('passive', passive);
-    
+    localStorage.setItem('value', value);
     
 }
 
