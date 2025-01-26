@@ -8,6 +8,10 @@ if (localStorage.getItem('amount') === null) {
 }
 else {
     x = parseInt(localStorage.getItem('amount', x));
+    if (isNaN(x)) {
+        x = 0;
+    }
+    
 }
 
 const button = document.getElementById("mybutton");
