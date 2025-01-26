@@ -30,8 +30,10 @@ else {
 
 const button = document.getElementById("mainButton");
 const valueButton = document.getElementById("valueButton");
-const passiveButton = document.getElementById("passiveButton");
+const passiveButton = document.getElementById("passiveButton1");
 const output = document.getElementById("output");
+const value = document.getElementById("value");
+const passive = document.getElementById("passive");
 
 button.addEventListener("click", function () {
     currency = currency + 1;
