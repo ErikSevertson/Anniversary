@@ -1,16 +1,29 @@
 
 console.log("Script loaded!");
 
-let x;
+let currency;
+let passive;
 
 if (localStorage.getItem('amount') === null) {
-    x = 0;
+    currency = 0;
 }
 else {
-    x = parseInt(localStorage.getItem('amount', x));
+    x = parseInt(localStorage.getItem('amount'));
     if (isNaN(x)) {
         console.log("Supposedly loaded amount but then fell back on NaN catch.");
-        x = 0;
+        currency = 0;
+    }
+    
+}
+
+if (localStorage.getItem('passive') === null) {
+    passive = 0;
+}
+else {
+    passive = parseInt(localStorage.getItem('amount'));
+    if (isNaN(passive)) {
+        console.log("Supposedly loaded passive but then fell back on NaN catch.");
+        passive = 0;
     }
     
 }
@@ -21,15 +34,19 @@ const passiveButton = document.getElementById("passiveButton");
 const output = document.getElementById("output");
 
 button.addEventListener("click", function () {
-    x = x + 1;
+    currency = currency + 1;
     output.textContent = x;
-    button.style.display = "none"; 
 });
 
+passiveButton.addEventListener("click", function() {
+    passive = passive + 1;
+})
+
 function incrementAndUpdate() {
-    x += 1;
-    output.textContent = x;
-    localStorage.setItem('amount', x);
+    currency += passive;
+    output.textContent = currency;
+    localStorage.setItem('amount', currency);
+    
 }
 
 setInterval(incrementAndUpdate, 1000);
