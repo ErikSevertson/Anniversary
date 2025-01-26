@@ -1,7 +1,13 @@
 
 console.log("Script loaded!");
 
-let x = 0;
+
+if (localStorage.getItem('amount') === null {
+    let x = 0;
+}
+else {
+    x = localStorage.setItem('amount', x);
+}
 
 const button = document.getElementById("mybutton");
 const output = document.getElementById("output");
@@ -15,6 +21,7 @@ function incrementAndUpdate() {
     console.log("This runs every second");
     x += 1;
     output.textContent = x;
+    localStorage.setItem('amount', x);
 }
 
 setInterval(incrementAndUpdate, 1000);
