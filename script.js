@@ -9,6 +9,7 @@ if (localStorage.getItem('amount') === null) {
 else {
     x = parseInt(localStorage.getItem('amount', x));
     if (isNaN(x)) {
+        console.log("Supposedly loaded amount but then fell back on NaN catch.");
         x = 0;
     }
     
