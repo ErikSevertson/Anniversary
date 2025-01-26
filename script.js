@@ -66,7 +66,7 @@ resetButton.addEventListener("click", function() {
     localStorage.clear();
     currency = 0;
     localStorage.setItem('amount', 0);
-    value = 0;
+    value = 1;
     localStorage.setItem('value', 1);
     valueLabel.textContent = "Click value: " + value;
     passive = 0;
