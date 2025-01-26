@@ -4,6 +4,13 @@ console.log("Script loaded!");
 let currency;
 let passive;
 
+const button = document.getElementById("mainButton");
+const valueButton = document.getElementById("valueButton");
+const passiveButton = document.getElementById("passiveButton1");
+const outputLabel = document.getElementById("outputLabel");
+const valueLabel = document.getElementById("valueLabel");
+const passiveLabel = document.getElementById("passiveLabel");
+
 if (localStorage.getItem('amount') === null) {
     currency = 0;
 }
@@ -19,7 +26,8 @@ if (localStorage.getItem('passive') === null) {
     passive = 0;
 }
 else {
-    passive = parseInt(localStorage.getItem('amount'));
+    passive = parseInt(localStorage.getItem('passive'));
+    passiveLabel.textContent = "Passive Income: " + passive;
     if (isNaN(passive)) {
         console.log("Supposedly loaded passive but then fell back on NaN catch.");
         passive = 0;
@@ -31,18 +39,12 @@ if (localStorage.getItem('value') === null) {
 }
 else {
     value = parseInt(localStorage.getItem('value'));
+    valueLabel.textContent = "Click value: " + value;
     if (isNaN(value)) {
         console.log("Supposedly loaded passive but then fell back on NaN catch.");
         value = 1;
     }
 }
-
-const button = document.getElementById("mainButton");
-const valueButton = document.getElementById("valueButton");
-const passiveButton = document.getElementById("passiveButton1");
-const outputLabel = document.getElementById("outputLabel");
-const valueLabel = document.getElementById("valueLabel");
-const passiveLabel = document.getElementById("passiveLabel");
 
 button.addEventListener("click", function () {
     currency = currency + value;
