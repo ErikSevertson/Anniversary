@@ -4,7 +4,7 @@ console.log("Script loaded!");
 const button = document.getElementById("mainButton");
 const outputLabel = document.getElementById("outputLabel");
 
-outputLabel.style.display = "none";
+document.getElementById("outputLabel").style.display = "none";
 
 
 
