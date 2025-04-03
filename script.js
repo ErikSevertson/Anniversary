@@ -10,7 +10,7 @@ document.getElementById("outputLabel").style.display = "none";
 
 
 button.addEventListener("click", function () {
-    document.getElementById("outputLabel").style.display = "block";
+    document.getElementById("outputLabel").style.display = "inline";
 });
 
 
