@@ -37,26 +37,39 @@
                 background-color: #D3D3D3; 
                 cursor: grab;
                 }
+
+            #heart-btn {
+      font-size: 4rem;
+      cursor: pointer;
+      border: none;
+      background: none;
+      transition: transform 0.1s ease;
+    }
+    #heart-btn:active {
+      transform: scale(1.2);
+    }
+    .counter {
+      font-size: 2rem;
+      margin: 1rem 0;
+    }
+    .upgrade {
+      margin-top: 1rem;
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      cursor: pointer;
+    }
         </style>
     </head>
     <body>
         <div id="main">
-            <div class="container">
-                <h2> Hello my darling! Welcome to the first month of the anniversary game challenge! You will be tasked with completing a small game or puzzle each month on the 6th, and at the end of 4 consecutive months you will be rewarded. The first month's challenge is a crossword. Good luck solving it, and I am here if you need any hints!</h3>
-            </div>
-
-        <iframe width="800" height="800" style="border:3px solid black; margin:auto; display:block" frameborder="0" src="https://crosswordlabs.com/embed/my-love-3-18"></iframe>
-
-            
-        <button class="button" id="completedButton">Click me when you're done with the puzzle!</button>
-
-        <div class="container" id="outputLabel">
-            <h2>
-                WOW you solved that puzzle so fast! Good job my sweet buttery croissant! There will be a larger prize at the end of the challenge, but for now I wrote you a haiku: <br><br>
-                <span style="color: red">My </span> <span style="color: pink">sweetest </span><span style="color: red">darling,</span><br>
-                <span style="color: pink">You </span>alone <span style="color: yellow">light</span> up my <span style="color: green">w</span><span style="color: blue">o</span><span style="color: green">r</span><span style="color: blue">l</span><span style="color: green">d</span> <br>
-                I <span style="color: red">long </span>for your <span style="color: red">kiss</span>
-            </h2>
+            <h1>💖 Love Clicker 💖</h1>
+  <div class="counter">Love Points: <span id="points">0</span></div>
+  
+  <button id="heart-btn">❤️</button>
+  
+  <div>
+    <button class="upgrade" id="upgrade-btn">Upgrade Click (+1) — Cost: 10</button>
+  </div>
         </div>
         
             
