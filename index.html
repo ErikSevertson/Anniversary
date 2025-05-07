@@ -1,63 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Love Clicker</title>
+  <meta charset="UTF-8">
+  <title>Love Clicker 💖</title>
   <style>
     body {
+      font-family: 'Arial', sans-serif;
       text-align: center;
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #fff0f5;
-      padding-top: 40px;
+      background-color: #ffeef0;
+      padding: 2rem;
     }
-
+    h1 {
+      color: #d6336c;
+    }
+    .button {
+      padding: 10px 20px;
+      margin: 10px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      background-color: #ff99aa;
+      color: white;
+      cursor: pointer;
+    }
+    .button:hover {
+      background-color: #ff6f91;
+    }
+    .counter {
+      font-size: 24px;
+      margin: 20px 0;
+    }
     #progress-container {
-      position: fixed;
-      top: 0;
-      left: 0;
       width: 100%;
-      height: 50px;
-      background-color: #e0e0e0;
-      z-index: 1000;
+      height: 30px;
+      background-color: #ddd;
+      border-radius: 15px;
+      overflow: hidden;
+      margin-bottom: 20px;
     }
-
     #progress-bar {
       height: 100%;
       width: 0%;
-      background-color: #ff69b4;
-      transition: width 0.3s ease;
+      background-color: #ff6f91;
+      transition: width 0.3s;
     }
-
-    #heart-btn {
-      font-size: 4rem;
-      cursor: pointer;
-      border: none;
-      background: none;
-      transition: transform 0.1s ease;
-    }
-
-    #heart-btn:active {
-      transform: scale(1.2);
-    }
-
-    .counter {
-      font-size: 1.5rem;
-      margin: 1rem 0;
-    }
-
-    .button {
-      margin: 0.5rem;
-      padding: 0.5rem 1rem;
-      font-size: 1rem;
-      cursor: pointer;
-    }
-
     #secret-message {
       display: none;
-      margin-top: 1rem;
-      font-size: 1.2rem;
-      color: #c71585;
+      font-size: 24px;
+      color: #d6336c;
+      margin-top: 30px;
     }
   </style>
 </head>
@@ -67,22 +58,34 @@
     <div id="progress-bar"></div>
   </div>
 
-  <h1>💖 Love Clicker 💖</h1>
-  <div class="counter">
-    Love Points: <span id="points">0</span><br>
-    Click Power: <span id="click-power">1</span><br>
-    Auto Generators: <span id="auto-count">0</span><br>
-    Prestige Multiplier: x<span id="prestige">1</span>
+  <h1>Love Clicker 💖</h1>
+
+  <div class="counter">Love Points: <span id="points">0</span></div>
+
+  <button class="button" onclick="clickLove()">Click for Love</button><br>
+
+  <button class="button" id="upgrade-btn">Upgrade Click (+1) — Cost: 10</button><br>
+  <button class="button" id="auto-btn">Buy Auto Generator — Cost: 100</button><br>
+  <button class="button" id="prestige-btn">Prestige ✨ (Reset for Bonus)</button><br>
+  <button class="button" onclick="resetGame()">Reset Game</button><br>
+
+  <div class="counter">Click Power: <span id="click-power">1</span></div>
+  <div class="counter">Auto Generators: <span id="auto-count">0</span></div>
+  <div class="counter">Prestige Multiplier: x<span id="prestige-multiplier">1</span></div>
+
+  <hr>
+
+  <div class="counter" id="future-display">
+    🏠 Home: <span id="current-home">Apartment</span><br>
+    🐱 Cats: <span id="cat-count">0</span><br>
+    🐶 Dogs: <span id="dog-count">0</span>
   </div>
 
-  <button id="heart-btn">❤️</button><br>
+  <button class="button" id="upgrade-home-btn">Upgrade Home — Cost: 500</button><br>
+  <button class="button" id="add-cat-btn">Add a Cat 🐱 — Cost: 300</button><br>
+  <button class="button" id="add-dog-btn">Add a Dog 🐶 — Cost: 300</button>
 
-  <button class="button" id="upgrade-btn">Upgrade Click (+1)</button><br>
-  <button class="button" id="auto-btn">Buy Auto Generator</button><br>
-  <button class="button" id="prestige-btn">Prestige (100,000 LP)</button><br>
-  <button class="button" id="reset-btn">Reset Game</button>
-
-  <div id="secret-message">🎉 You've reached 100,000 love points! You're unstoppable! 💘</div>
+  <div id="secret-message">💌 You reached 100,000 love points! Here's a surprise: I love you more than ever. 💌</div>
 
   <script>
     let points = 0;
@@ -92,46 +95,29 @@
     let autoCost = 100;
     let prestigeMultiplier = 1;
 
+    let homeLevel = 0;
+    let catCount = 0;
+    let dogCount = 0;
+    const homeTypes = ["Apartment", "Condo", "House", "Cottage", "Villa", "Castle"];
+    const homeBaseCost = 500;
+    const petBaseCost = 300;
+
     const pointsDisplay = document.getElementById('points');
     const clickPowerDisplay = document.getElementById('click-power');
     const autoCountDisplay = document.getElementById('auto-count');
-    const prestigeDisplay = document.getElementById('prestige');
+    const prestigeDisplay = document.getElementById('prestige-multiplier');
     const progressBar = document.getElementById('progress-bar');
 
-    const heartBtn = document.getElementById('heart-btn');
+    const homeDisplay = document.getElementById('current-home');
+    const catDisplay = document.getElementById('cat-count');
+    const dogDisplay = document.getElementById('dog-count');
+
     const upgradeBtn = document.getElementById('upgrade-btn');
     const autoBtn = document.getElementById('auto-btn');
     const prestigeBtn = document.getElementById('prestige-btn');
-    const resetBtn = document.getElementById('reset-btn');
-
-    function saveGame() {
-      const data = {
-        points, pointsPerClick, upgradeCost, autoCount, autoCost, prestigeMultiplier
-      };
-      localStorage.setItem('loveClickerSave', JSON.stringify(data));
-    }
-
-    function loadGame() {
-      const data = JSON.parse(localStorage.getItem('loveClickerSave'));
-      if (data) {
-        points = data.points || 0;
-        pointsPerClick = data.pointsPerClick || 1;
-        upgradeCost = data.upgradeCost || 10;
-        autoCount = data.autoCount || 0;
-        autoCost = data.autoCost || 100;
-        prestigeMultiplier = data.prestigeMultiplier || 1;
-      }
-    }
-
-    function resetGame(full = true) {
-      points = 0;
-      pointsPerClick = 1;
-      upgradeCost = 10;
-      autoCount = 0;
-      autoCost = 100;
-      if (full) prestigeMultiplier = 1;
-      localStorage.removeItem('loveClickerSave');
-    }
+    const upgradeHomeBtn = document.getElementById('upgrade-home-btn');
+    const addCatBtn = document.getElementById('add-cat-btn');
+    const addDogBtn = document.getElementById('add-dog-btn');
 
     function updateDisplay() {
       pointsDisplay.textContent = Math.floor(points);
@@ -141,75 +127,138 @@
 
       upgradeBtn.textContent = `Upgrade Click (+1) — Cost: ${upgradeCost}`;
       autoBtn.textContent = `Buy Auto Generator — Cost: ${autoCost}`;
+      upgradeHomeBtn.textContent = `Upgrade Home — Cost: ${homeBaseCost * (homeLevel + 1)}`;
+      addCatBtn.textContent = `Add a Cat 🐱 — Cost: ${petBaseCost + catCount * 100}`;
+      addDogBtn.textContent = `Add a Dog 🐶 — Cost: ${petBaseCost + dogCount * 100}`;
 
-      const progress = Math.min(points / 100000, 1) * 100;
-      progressBar.style.width = `${progress}%`;
+      homeDisplay.textContent = homeTypes[homeLevel] || "???";
+      catDisplay.textContent = catCount;
+      dogDisplay.textContent = dogCount;
+
+      progressBar.style.width = `${Math.min(points / 100000, 1) * 100}%`;
 
       if (points >= 100000) {
         document.getElementById('secret-message').style.display = 'block';
       }
     }
 
-    heartBtn.addEventListener('click', () => {
+    function clickLove() {
       points += pointsPerClick * prestigeMultiplier;
       updateDisplay();
-    });
+    }
 
     upgradeBtn.addEventListener('click', () => {
       if (points >= upgradeCost) {
         points -= upgradeCost;
-        pointsPerClick++;
+        pointsPerClick += 1;
         upgradeCost = Math.floor(upgradeCost * 1.5);
         updateDisplay();
-      } else {
-        alert("Not enough love points!");
       }
     });
 
     autoBtn.addEventListener('click', () => {
       if (points >= autoCost) {
         points -= autoCost;
-        autoCount++;
-        autoCost = Math.floor(autoCost * 1.75);
+        autoCount += 1;
+        autoCost = Math.floor(autoCost * 1.7);
         updateDisplay();
-      } else {
-        alert("Not enough love points!");
       }
     });
 
     prestigeBtn.addEventListener('click', () => {
-      if (points >= 100000) {
-        prestigeMultiplier++;
-        resetGame(false); // keep prestige
-        alert("Prestige unlocked! Your points now earn x" + prestigeMultiplier + " ❤️");
+      if (points >= 1000) {
+        prestigeMultiplier += 1;
+        points = 0;
+        pointsPerClick = 1;
+        upgradeCost = 10;
+        autoCount = 0;
+        autoCost = 100;
+        homeLevel = 0;
+        catCount = 0;
+        dogCount = 0;
         updateDisplay();
       } else {
-        alert("You need 100,000 love points to prestige!");
+        alert("Reach at least 1000 points before prestiging!");
       }
     });
 
-    resetBtn.addEventListener('click', () => {
+    upgradeHomeBtn.addEventListener('click', () => {
+      const cost = homeBaseCost * (homeLevel + 1);
+      if (homeLevel < homeTypes.length - 1 && points >= cost) {
+        points -= cost;
+        homeLevel++;
+        updateDisplay();
+      } else {
+        alert("Not enough points, or you've reached your dream home!");
+      }
+    });
+
+    addCatBtn.addEventListener('click', () => {
+      const cost = petBaseCost + catCount * 100;
+      if (points >= cost) {
+        points -= cost;
+        catCount++;
+        updateDisplay();
+      } else {
+        alert("Not enough points for another kitty!");
+      }
+    });
+
+    addDogBtn.addEventListener('click', () => {
+      const cost = petBaseCost + dogCount * 100;
+      if (points >= cost) {
+        points -= cost;
+        dogCount++;
+        updateDisplay();
+      } else {
+        alert("Not enough points for another pup!");
+      }
+    });
+
+    function resetGame() {
       if (confirm("Are you sure you want to reset everything?")) {
-        resetGame();
-        updateDisplay();
+        localStorage.removeItem('loveClickerSave');
+        location.reload();
       }
-    });
+    }
 
-    // Auto-generator loop
-    setInterval(() => {
-      if (autoCount > 0) {
-        points += autoCount * prestigeMultiplier;
-        updateDisplay();
+    function saveGame() {
+      const data = {
+        points,
+        pointsPerClick,
+        upgradeCost,
+        autoCount,
+        autoCost,
+        prestigeMultiplier,
+        homeLevel,
+        catCount,
+        dogCount
+      };
+      localStorage.setItem('loveClickerSave', JSON.stringify(data));
+    }
+
+    function loadGame() {
+      const data = JSON.parse(localStorage.getItem('loveClickerSave'));
+      if (data) {
+        points = typeof data.points === 'number' ? data.points : 0;
+        pointsPerClick = typeof data.pointsPerClick === 'number' ? data.pointsPerClick : 1;
+        upgradeCost = typeof data.upgradeCost === 'number' ? data.upgradeCost : 10;
+        autoCount = typeof data.autoCount === 'number' ? data.autoCount : 0;
+        autoCost = typeof data.autoCost === 'number' ? data.autoCost : 100;
+        prestigeMultiplier = typeof data.prestigeMultiplier === 'number' ? data.prestigeMultiplier : 1;
+        homeLevel = typeof data.homeLevel === 'number' ? data.homeLevel : 0;
+        catCount = typeof data.catCount === 'number' ? data.catCount : 0;
+        dogCount = typeof data.dogCount === 'number' ? data.dogCount : 0;
       }
-    }, 1000); // 1 second
+    }
 
-    // Save every 2 seconds
-    setInterval(saveGame, 2000);
-
-    // Initialize
     loadGame();
     updateDisplay();
+    setInterval(() => {
+      points += autoCount * prestigeMultiplier;
+      updateDisplay();
+    }, 1000);
+    setInterval(saveGame, 2000);
   </script>
-
 </body>
 </html>
