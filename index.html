@@ -51,8 +51,8 @@
       margin-top: 30px;
     }
     .pet-img {
-      height: 80px;
-      margin: 5px;
+      height: 160px;
+      margin: 10px;
     }
     .link {
       display: block;
@@ -105,12 +105,13 @@
     let autoCount = 0;
     let autoCost = 100;
     let prestigeMultiplier = 1;
-
     let homeLevel = 0;
+    let hasCat = false;
+    let hasDog = false;
 
     const homeTypes = ["Apartment", "Condo", "House", "Cottage", "Villa", "Castle"];
     const zillowLinks = [
-      "https://www.zillow.com/homedetails/1/", // Example links — replace with real ones
+      "https://www.zillow.com/homedetails/1/",
       "https://www.zillow.com/homedetails/2/",
       "https://www.zillow.com/homedetails/3/",
       "https://www.zillow.com/homedetails/4/"
@@ -145,33 +146,23 @@
       upgradeBtn.textContent = `Upgrade Click (+1) — Cost: ${upgradeCost}`;
       autoBtn.textContent = `Buy Auto Generator — Cost: ${autoCost}`;
       upgradeHomeBtn.textContent = `Upgrade Home — Cost: ${homeBaseCost * (homeLevel + 1)}`;
-      addCatBtn.textContent = `Add a Cat 🐱 — Cost: ${petBaseCost + catCount * 100}`;
-      addDogBtn.textContent = `Add a Dog 🐶 — Cost: ${petBaseCost + dogCount * 100}`;
 
       homeDisplay.textContent = homeTypes[homeLevel] || "???";
 
-      // Show Zillow link if available
       if (homeLevel < zillowLinks.length) {
         homeLink.innerHTML = `<a href="${zillowLinks[homeLevel]}" target="_blank">🏡 View Dream Home on Zillow</a>`;
       } else {
         homeLink.innerHTML = '';
       }
 
-      // Show cat images
-      catImgs.innerHTML = '';
-      let img = document.createElement('img');
-      img.src = 'https://i.imgur.com/jn12XuB.jpeg';
-      img.classList.add('pet-img');
-      catImgs.appendChild(img);
-      
-
-      // Show dog images
-      dogImgs.innerHTML = '';
-      let img = document.createElement('img');
-      img.src = 'https://i.imgur.com/TgbH1aj.jpeg';
-      img.classList.add('pet-img');
-      dogImgs.appendChild(img);
-      
+      if (hasCat) {
+        catImgs.innerHTML = '<img src="https://i.imgur.com/jn12XuB.jpeg" class="pet-img">';
+        addCatBtn.style.display = 'none';
+      }
+      if (hasDog) {
+        dogImgs.innerHTML = '<img src="https://i.imgur.com/TgbH1aj.jpeg" class="pet-img">';
+        addDogBtn.style.display = 'none';
+      }
 
       progressBar.style.width = `${Math.min(points / 100000, 1) * 100}%`;
 
@@ -212,6 +203,12 @@
         autoCount = 0;
         autoCost = 100;
         homeLevel = 0;
+        hasCat = false;
+        hasDog = false;
+        addCatBtn.style.display = 'inline-block';
+        addDogBtn.style.display = 'inline-block';
+        catImgs.innerHTML = '';
+        dogImgs.innerHTML = '';
         updateDisplay();
       } else {
         alert("Reach at least 1000 points before prestiging!");
@@ -230,24 +227,22 @@
     });
 
     addCatBtn.addEventListener('click', () => {
-      const cost = petBaseCost + catCount * 100;
-      if (points >= cost) {
-        points -= cost;
-        document.getElementById('add-cat-btn').style.display = 'none';
+      if (!hasCat && points >= petBaseCost) {
+        points -= petBaseCost;
+        hasCat = true;
         updateDisplay();
       } else {
-        alert("Not enough points for another kitty!");
+        alert("Not enough points or already have a cat!");
       }
     });
 
     addDogBtn.addEventListener('click', () => {
-      const cost = petBaseCost + dogCount * 100;
-      if (points >= cost) {
-        points -= cost;
-        document.getElementById('add-dog-btn').style.display = 'none';
+      if (!hasDog && points >= petBaseCost) {
+        points -= petBaseCost;
+        hasDog = true;
         updateDisplay();
       } else {
-        alert("Not enough points for another pup!");
+        alert("Not enough points or already have a dog!");
       }
     });
 
@@ -266,7 +261,9 @@
         autoCount,
         autoCost,
         prestigeMultiplier,
-        homeLevel
+        homeLevel,
+        hasCat,
+        hasDog
       };
       localStorage.setItem('loveClickerSave', JSON.stringify(data));
     }
@@ -281,6 +278,8 @@
         autoCost = data.autoCost || 100;
         prestigeMultiplier = data.prestigeMultiplier || 1;
         homeLevel = data.homeLevel || 0;
+        hasCat = data.hasCat || false;
+        hasDog = data.hasDog || false;
       }
     }
 
