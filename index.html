@@ -50,6 +50,15 @@
       color: #d6336c;
       margin-top: 30px;
     }
+    .pet-img {
+      height: 80px;
+      margin: 5px;
+    }
+    .link {
+      display: block;
+      margin-top: 10px;
+      font-size: 16px;
+    }
   </style>
 </head>
 <body>
@@ -76,9 +85,13 @@
   <hr>
 
   <div class="counter" id="future-display">
-    🏠 Home: <span id="current-home">Apartment</span><br>
+    🏠 Home: <span id="current-home">Apartment</span>
+    <div id="home-link" class="link"></div>
+    <br>
     🐱 Cats: <span id="cat-count">0</span><br>
-    🐶 Dogs: <span id="dog-count">0</span>
+    <div id="cat-imgs"></div>
+    🐶 Dogs: <span id="dog-count">0</span><br>
+    <div id="dog-imgs"></div>
   </div>
 
   <button class="button" id="upgrade-home-btn">Upgrade Home — Cost: 500</button><br>
@@ -98,7 +111,14 @@
     let homeLevel = 0;
     let catCount = 0;
     let dogCount = 0;
+
     const homeTypes = ["Apartment", "Condo", "House", "Cottage", "Villa", "Castle"];
+    const zillowLinks = [
+      "https://www.zillow.com/homedetails/1/", // Example links — replace with real ones
+      "https://www.zillow.com/homedetails/2/",
+      "https://www.zillow.com/homedetails/3/",
+      "https://www.zillow.com/homedetails/4/"
+    ];
     const homeBaseCost = 500;
     const petBaseCost = 300;
 
@@ -109,8 +129,11 @@
     const progressBar = document.getElementById('progress-bar');
 
     const homeDisplay = document.getElementById('current-home');
+    const homeLink = document.getElementById('home-link');
     const catDisplay = document.getElementById('cat-count');
     const dogDisplay = document.getElementById('dog-count');
+    const catImgs = document.getElementById('cat-imgs');
+    const dogImgs = document.getElementById('dog-imgs');
 
     const upgradeBtn = document.getElementById('upgrade-btn');
     const autoBtn = document.getElementById('auto-btn');
@@ -132,8 +155,34 @@
       addDogBtn.textContent = `Add a Dog 🐶 — Cost: ${petBaseCost + dogCount * 100}`;
 
       homeDisplay.textContent = homeTypes[homeLevel] || "???";
+
+      // Show Zillow link if available
+      if (homeLevel < zillowLinks.length) {
+        homeLink.innerHTML = `<a href="${zillowLinks[homeLevel]}" target="_blank">🏡 View Dream Home on Zillow</a>`;
+      } else {
+        homeLink.innerHTML = '';
+      }
+
       catDisplay.textContent = catCount;
       dogDisplay.textContent = dogCount;
+
+      // Show cat images
+      catImgs.innerHTML = '';
+      for (let i = 0; i < catCount; i++) {
+        let img = document.createElement('img');
+        img.src = 'https://placekitten.com/80/80';
+        img.classList.add('pet-img');
+        catImgs.appendChild(img);
+      }
+
+      // Show dog images
+      dogImgs.innerHTML = '';
+      for (let i = 0; i < dogCount; i++) {
+        let img = document.createElement('img');
+        img.src = 'https://placedog.net/80/80?id=' + i;
+        img.classList.add('pet-img');
+        dogImgs.appendChild(img);
+      }
 
       progressBar.style.width = `${Math.min(points / 100000, 1) * 100}%`;
 
@@ -240,15 +289,15 @@
     function loadGame() {
       const data = JSON.parse(localStorage.getItem('loveClickerSave'));
       if (data) {
-        points = typeof data.points === 'number' ? data.points : 0;
-        pointsPerClick = typeof data.pointsPerClick === 'number' ? data.pointsPerClick : 1;
-        upgradeCost = typeof data.upgradeCost === 'number' ? data.upgradeCost : 10;
-        autoCount = typeof data.autoCount === 'number' ? data.autoCount : 0;
-        autoCost = typeof data.autoCost === 'number' ? data.autoCost : 100;
-        prestigeMultiplier = typeof data.prestigeMultiplier === 'number' ? data.prestigeMultiplier : 1;
-        homeLevel = typeof data.homeLevel === 'number' ? data.homeLevel : 0;
-        catCount = typeof data.catCount === 'number' ? data.catCount : 0;
-        dogCount = typeof data.dogCount === 'number' ? data.dogCount : 0;
+        points = data.points || 0;
+        pointsPerClick = data.pointsPerClick || 1;
+        upgradeCost = data.upgradeCost || 10;
+        autoCount = data.autoCount || 0;
+        autoCost = data.autoCost || 100;
+        prestigeMultiplier = data.prestigeMultiplier || 1;
+        homeLevel = data.homeLevel || 0;
+        catCount = data.catCount || 0;
+        dogCount = data.dogCount || 0;
       }
     }
 
