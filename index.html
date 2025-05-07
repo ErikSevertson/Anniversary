@@ -9,7 +9,7 @@
       text-align: center;
       font-family: 'Segoe UI', sans-serif;
       background-color: #fff0f5;
-      padding: 2rem;
+      padding-top: 40px;
     }
 
     #progress-container {
@@ -18,7 +18,8 @@
       left: 0;
       width: 100%;
       height: 20px;
-      background-color: #eee;
+      background-color: #e0e0e0;
+      z-index: 1000;
     }
 
     #progress-bar {
@@ -41,7 +42,7 @@
     }
 
     .counter {
-      font-size: 2rem;
+      font-size: 1.5rem;
       margin: 1rem 0;
     }
 
@@ -76,9 +77,9 @@
 
   <button id="heart-btn">❤️</button><br>
 
-  <button class="button" id="upgrade-btn">Upgrade Click (+1) — Cost: 10</button><br>
-  <button class="button" id="auto-btn">Buy Auto Generator — Cost: 100</button><br>
-  <button class="button" id="prestige-btn">Prestige (requires 100,000 LP)</button><br>
+  <button class="button" id="upgrade-btn">Upgrade Click (+1)</button><br>
+  <button class="button" id="auto-btn">Buy Auto Generator</button><br>
+  <button class="button" id="prestige-btn">Prestige (100,000 LP)</button><br>
   <button class="button" id="reset-btn">Reset Game</button>
 
   <div id="secret-message">🎉 You've reached 100,000 love points! You're unstoppable! 💘</div>
@@ -119,7 +120,6 @@
         autoCount = data.autoCount || 0;
         autoCost = data.autoCost || 100;
         prestigeMultiplier = data.prestigeMultiplier || 1;
-        updateDisplay();
       }
     }
 
@@ -131,7 +131,6 @@
       autoCost = 100;
       if (full) prestigeMultiplier = 1;
       localStorage.removeItem('loveClickerSave');
-      updateDisplay();
     }
 
     function updateDisplay() {
@@ -139,6 +138,9 @@
       clickPowerDisplay.textContent = pointsPerClick;
       autoCountDisplay.textContent = autoCount;
       prestigeDisplay.textContent = prestigeMultiplier;
+
+      upgradeBtn.textContent = `Upgrade Click (+1) — Cost: ${upgradeCost}`;
+      autoBtn.textContent = `Buy Auto Generator — Cost: ${autoCost}`;
 
       const progress = Math.min(points / 100000, 1) * 100;
       progressBar.style.width = `${progress}%`;
@@ -158,8 +160,9 @@
         points -= upgradeCost;
         pointsPerClick++;
         upgradeCost = Math.floor(upgradeCost * 1.5);
-        upgradeBtn.textContent = `Upgrade Click (+1) — Cost: ${upgradeCost}`;
         updateDisplay();
+      } else {
+        alert("Not enough love points!");
       }
     });
 
@@ -168,17 +171,18 @@
         points -= autoCost;
         autoCount++;
         autoCost = Math.floor(autoCost * 1.75);
-        autoBtn.textContent = `Buy Auto Generator — Cost: ${autoCost}`;
         updateDisplay();
+      } else {
+        alert("Not enough love points!");
       }
     });
 
     prestigeBtn.addEventListener('click', () => {
       if (points >= 100000) {
         prestigeMultiplier++;
-        resetGame(false);
-        updateDisplay();
+        resetGame(false); // keep prestige
         alert("Prestige unlocked! Your points now earn x" + prestigeMultiplier + " ❤️");
+        updateDisplay();
       } else {
         alert("You need 100,000 love points to prestige!");
       }
@@ -191,7 +195,7 @@
       }
     });
 
-    // Auto-generator interval
+    // Auto-generator loop
     setInterval(() => {
       if (autoCount > 0) {
         points += autoCount * prestigeMultiplier;
@@ -199,11 +203,13 @@
       }
     }, 1000); // 1 second
 
-    // Auto-save every 2 seconds
+    // Save every 2 seconds
     setInterval(saveGame, 2000);
 
+    // Initialize
     loadGame();
     updateDisplay();
   </script>
+
 </body>
 </html>
