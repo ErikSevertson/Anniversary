@@ -147,7 +147,7 @@
 
       upgradeBtn.textContent = `Upgrade Click (+1) — Cost: ${upgradeCost}`;
       autoBtn.textContent = `Buy Auto Generator — Cost: ${autoCost}`;
-      upgradeHomeBtn.textContent = `Upgrade Home — Cost: ${homeBaseCost * (homeLevel + 1)}`;
+      upgradeHomeBtn.textContent = `Upgrade Home — Cost: ${homeBaseCost * (homeLevel + 1) ** (4/3)}`;
 
       homeDisplay.textContent = homeTypes[homeLevel] || "???";
       homeLink.innerHTML = '';
