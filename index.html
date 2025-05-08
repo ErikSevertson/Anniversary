@@ -233,7 +233,7 @@
     });
 
     addCatBtn.addEventListener('click', () => {
-      if (!catPurchased && points >= petBaseCost) {
+      if (!catPurchased && points >= catBaseCost) {
         points -= catBaseCost;
         catPurchased = true;
         updateDisplay();
@@ -241,7 +241,7 @@
     });
 
     addDogBtn.addEventListener('click', () => {
-      if (!dogPurchased && points >= petBaseCost) {
+      if (!dogPurchased && points >= dogBaseCost) {
         points -= dogBaseCost;
         dogPurchased = true;
         updateDisplay();
