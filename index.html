@@ -147,7 +147,7 @@
 
       upgradeBtn.textContent = `Upgrade Click (+1) — Cost: ${upgradeCost}`;
       autoBtn.textContent = `Buy Auto Generator — Cost: ${autoCost}`;
-      upgradeHomeBtn.textContent = `Upgrade Home — Cost: ${Math.floor(homeBaseCost * (homeLevel + 1) ** (4/3))}`;
+      upgradeHomeBtn.textContent = `Upgrade Home — Cost: ${Math.floor(homeBaseCost * (homeLevel + 1) ** (3/2))}`;
 
       homeDisplay.textContent = homeTypes[homeLevel] || "???";
       homeLink.innerHTML = '';
@@ -222,7 +222,7 @@
     });
 
     upgradeHomeBtn.addEventListener('click', () => {
-      const cost = Math.floor(homeBaseCost * (homeLevel + 1) ** (4/3));
+      const cost = Math.floor(homeBaseCost * (homeLevel + 1) ** (3/2));
       if (homeLevel < homeTypes.length - 1 && points >= cost) {
         points -= cost;
         homeLevel++;
