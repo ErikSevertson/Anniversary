@@ -51,8 +51,8 @@
       margin-top: 30px;
     }
     .pet-img {
-      height: 160px;
-      margin: 10px;
+      height: 80px;
+      margin: 5px;
     }
     .link {
       display: block;
@@ -105,16 +105,17 @@
     let autoCount = 0;
     let autoCost = 100;
     let prestigeMultiplier = 1;
+
     let homeLevel = 0;
-    let hasCat = false;
-    let hasDog = false;
+    let catPurchased = false;
+    let dogPurchased = false;
 
     const homeTypes = ["Apartment", "Condo", "House", "Cottage", "Villa", "Castle"];
     const zillowLinks = [
-      "https://www.zillow.com/homedetails/5200-28th-St-N-LOT-500-Saint-Petersburg-FL-33714/447765498_zpid/",
-      "https://www.zillow.com/apartments/toledo-oh/oak-hill-apartments-hill-ave./5XtK43/",
-      "https://www.zillow.com/apartments/denver-co/via-apartments/CkBDtp/",
-      "https://www.zillow.com/homedetails/4135-Chilberg-Ave-SW-APT-A-Seattle-WA-98116/2057771151_zpid/?mmlb=g,26"
+      "https://www.zillow.com/homedetails/1/",
+      "https://www.zillow.com/homedetails/2/",
+      "https://www.zillow.com/homedetails/3/",
+      "https://www.zillow.com/homedetails/4/"
     ];
     const homeBaseCost = 500;
     const petBaseCost = 300;
@@ -148,20 +149,31 @@
       upgradeHomeBtn.textContent = `Upgrade Home — Cost: ${homeBaseCost * (homeLevel + 1)}`;
 
       homeDisplay.textContent = homeTypes[homeLevel] || "???";
-
-      if (homeLevel < zillowLinks.length) {
-        homeLink.innerHTML = `<a href="${zillowLinks[homeLevel]}" target="_blank">🏡 View Dream Home on Zillow</a>`;
-      } else {
-        homeLink.innerHTML = '';
+      homeLink.innerHTML = '';
+      if (homeLevel > 0 && homeLevel - 1 < zillowLinks.length) {
+        homeLink.innerHTML = `<a href="${zillowLinks[homeLevel - 1]}" target="_blank">🏡 View Dream Home on Zillow</a>`;
       }
 
-      if (hasCat) {
-        catImgs.innerHTML = '<img src="https://i.imgur.com/jn12XuB.jpeg" class="pet-img">';
+      catImgs.innerHTML = '';
+      if (catPurchased) {
+        let img = document.createElement('img');
+        img.src = 'https://i.imgur.com/jn12XuB.jpeg';
+        img.classList.add('pet-img');
+        catImgs.appendChild(img);
         addCatBtn.style.display = 'none';
+      } else {
+        addCatBtn.style.display = 'inline-block';
       }
-      if (hasDog) {
-        dogImgs.innerHTML = '<img src="https://i.imgur.com/TgbH1aj.jpeg" class="pet-img">';
+
+      dogImgs.innerHTML = '';
+      if (dogPurchased) {
+        let img = document.createElement('img');
+        img.src = 'https://i.imgur.com/TgbH1aj.jpeg';
+        img.classList.add('pet-img');
+        dogImgs.appendChild(img);
         addDogBtn.style.display = 'none';
+      } else {
+        addDogBtn.style.display = 'inline-block';
       }
 
       progressBar.style.width = `${Math.min(points / 100000, 1) * 100}%`;
@@ -203,12 +215,8 @@
         autoCount = 0;
         autoCost = 100;
         homeLevel = 0;
-        hasCat = false;
-        hasDog = false;
-        addCatBtn.style.display = 'inline-block';
-        addDogBtn.style.display = 'inline-block';
-        catImgs.innerHTML = '';
-        dogImgs.innerHTML = '';
+        catPurchased = false;
+        dogPurchased = false;
         updateDisplay();
       } else {
         alert("Reach at least 1000 points before prestiging!");
@@ -227,22 +235,18 @@
     });
 
     addCatBtn.addEventListener('click', () => {
-      if (!hasCat && points >= petBaseCost) {
+      if (!catPurchased && points >= petBaseCost) {
         points -= petBaseCost;
-        hasCat = true;
+        catPurchased = true;
         updateDisplay();
-      } else {
-        alert("Not enough points or already have a cat!");
       }
     });
 
     addDogBtn.addEventListener('click', () => {
-      if (!hasDog && points >= petBaseCost) {
+      if (!dogPurchased && points >= petBaseCost) {
         points -= petBaseCost;
-        hasDog = true;
+        dogPurchased = true;
         updateDisplay();
-      } else {
-        alert("Not enough points or already have a dog!");
       }
     });
 
@@ -262,8 +266,8 @@
         autoCost,
         prestigeMultiplier,
         homeLevel,
-        hasCat,
-        hasDog
+        catPurchased,
+        dogPurchased
       };
       localStorage.setItem('loveClickerSave', JSON.stringify(data));
     }
@@ -278,8 +282,8 @@
         autoCost = data.autoCost || 100;
         prestigeMultiplier = data.prestigeMultiplier || 1;
         homeLevel = data.homeLevel || 0;
-        hasCat = data.hasCat || false;
-        hasDog = data.hasDog || false;
+        catPurchased = data.catPurchased || false;
+        dogPurchased = data.dogPurchased || false;
       }
     }
 
