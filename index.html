@@ -103,7 +103,7 @@
     let pointsPerClick = 1;
     let upgradeCost = 10;
     let autoCount = 0;
-    let autoCost = 100;
+    let autoCost = 50;
     let prestigeMultiplier = 1;
 
     let homeLevel = 0;
@@ -117,9 +117,9 @@
       "https://www.zillow.com/apartments/denver-co/via-apartments/CkBDtp/",
       "https://www.zillow.com/homedetails/4135-Chilberg-Ave-SW-APT-A-Seattle-WA-98116/2057771151_zpid/?mmlb=g,26"
     ];
-    const homeBaseCost = 500;
-    const catBaseCost = 500;
-    const dogBaseCost = 1000;
+    const homeBaseCost = 1000;
+    const catBaseCost = 1000;
+    const dogBaseCost = 2000;
 
     const pointsDisplay = document.getElementById('points');
     const clickPowerDisplay = document.getElementById('click-power');
@@ -179,7 +179,7 @@
 
       progressBar.style.width = `${Math.min(points / 100000, 1) * 100}%`;
 
-      if (points >= 100000) {
+      if (points >= 50000) {
         document.getElementById('secret-message').style.display = 'block';
       }
     }
@@ -202,7 +202,7 @@
       if (points >= autoCost) {
         points -= autoCost;
         autoCount += 1;
-        autoCost = Math.floor(autoCost * 1.3);
+        autoCost = Math.floor(autoCost * 1.1);
         updateDisplay();
       }
     });
@@ -214,7 +214,7 @@
         pointsPerClick = 1;
         upgradeCost = 10;
         autoCount = 0;
-        autoCost = 100;
+        autoCost = 50;
         updateDisplay();
       } else {
         alert("Reach at least 5000 points before prestiging!");
@@ -277,7 +277,7 @@
         pointsPerClick = data.pointsPerClick || 1;
         upgradeCost = data.upgradeCost || 10;
         autoCount = data.autoCount || 0;
-        autoCost = data.autoCost || 100;
+        autoCost = data.autoCost || 50;
         prestigeMultiplier = data.prestigeMultiplier || 1;
         homeLevel = data.homeLevel || 0;
         catPurchased = data.catPurchased || false;
