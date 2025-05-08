@@ -93,8 +93,8 @@
   </div>
 
   <button class="button" id="upgrade-home-btn">Upgrade Home — Cost: 500</button><br>
-  <button class="button" id="add-cat-btn">Add a Cat 🐱 — Cost: 300</button><br>
-  <button class="button" id="add-dog-btn">Add a Dog 🐶 — Cost: 300</button>
+  <button class="button" id="add-cat-btn">Add a Cat 🐱 — Cost: 500</button><br>
+  <button class="button" id="add-dog-btn">Add a Dog 🐶 — Cost: 1000</button>
 
   <div id="secret-message">💌 You reached 100,000 love points! Here's a surprise: I love you more than ever. 💌</div>
 
@@ -118,7 +118,8 @@
       "https://www.zillow.com/homedetails/4/"
     ];
     const homeBaseCost = 500;
-    const petBaseCost = 300;
+    const catBaseCost = 500;
+    const dogBaseCost = 1000;
 
     const pointsDisplay = document.getElementById('points');
     const clickPowerDisplay = document.getElementById('click-power');
@@ -192,7 +193,7 @@
       if (points >= upgradeCost) {
         points -= upgradeCost;
         pointsPerClick += 1;
-        upgradeCost = Math.floor(upgradeCost * 1.5);
+        upgradeCost = Math.floor(upgradeCost * 1.3);
         updateDisplay();
       }
     });
@@ -201,30 +202,27 @@
       if (points >= autoCost) {
         points -= autoCost;
         autoCount += 1;
-        autoCost = Math.floor(autoCost * 1.7);
+        autoCost = Math.floor(autoCost * 1.3);
         updateDisplay();
       }
     });
 
     prestigeBtn.addEventListener('click', () => {
-      if (points >= 1000) {
+      if (points >= 5000) {
         prestigeMultiplier += 1;
         points = 0;
         pointsPerClick = 1;
         upgradeCost = 10;
         autoCount = 0;
         autoCost = 100;
-        homeLevel = 0;
-        catPurchased = false;
-        dogPurchased = false;
         updateDisplay();
       } else {
-        alert("Reach at least 1000 points before prestiging!");
+        alert("Reach at least 5000 points before prestiging!");
       }
     });
 
     upgradeHomeBtn.addEventListener('click', () => {
-      const cost = homeBaseCost * (homeLevel + 1);
+      const cost = homeBaseCost * (homeLevel + 1) ** (4/3);
       if (homeLevel < homeTypes.length - 1 && points >= cost) {
         points -= cost;
         homeLevel++;
@@ -236,7 +234,7 @@
 
     addCatBtn.addEventListener('click', () => {
       if (!catPurchased && points >= petBaseCost) {
-        points -= petBaseCost;
+        points -= catBaseCost;
         catPurchased = true;
         updateDisplay();
       }
@@ -244,7 +242,7 @@
 
     addDogBtn.addEventListener('click', () => {
       if (!dogPurchased && points >= petBaseCost) {
-        points -= petBaseCost;
+        points -= dogBaseCost;
         dogPurchased = true;
         updateDisplay();
       }
